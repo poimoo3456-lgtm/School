@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title>Student Council Election</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="manifest" href="manifest.json">
+
+  <style>
+    body{
+      background:#0f172a;
+      color:white;
+      font-family:sans-serif;
+    }
+
+    .glass{
+      background:rgba(255,255,255,.08);
+      backdrop-filter:blur(20px);
+      border:1px solid rgba(255,255,255,.1);
+    }
+
+    .hidden{
+      display:none;
+    }
+  </style>
+</head>
+<body>
+
+<div id="app">
+
+  <!-- LOGIN -->
+  <section id="loginPage" class="min-h-screen flex items-center justify-center p-5">
+
+    <div class="glass p-8 rounded-3xl w-full max-w-md">
+
+      <h1 class="text-3xl font-bold mb-6 text-center">
+        Student Council Election
+      </h1>
+
+      <input id="fullName"
+        class="w-full p-3 rounded-xl bg-slate-900 mb-3"
+        placeholder="ชื่อ-นามสกุล">
+
+      <input id="classLevel"
+        class="w-full p-3 rounded-xl bg-slate-900 mb-3"
+        placeholder="ชั้น">
+
+      <input id="room"
+        class="w-full p-3 rounded-xl bg-slate-900 mb-3"
+        placeholder="ห้อง">
+
+      <input id="studentId"
+        class="w-full p-3 rounded-xl bg-slate-900 mb-5"
+        placeholder="เลขประจำตัว (เว้นได้)">
+
+      <button onclick="loginStudent()"
+        class="w-full p-3 rounded-xl bg-blue-500">
+        เข้าสู่ระบบ
+      </button>
+
+    </div>
+  </section>
+
+  <!-- VOTE PAGE -->
+  <section id="votePage" class="hidden p-5">
+
+    <div class="flex justify-between items-center mb-6">
+
+      <h2 class="text-2xl font-bold">
+        เลือกผู้สมัคร
+      </h2>
+
+      <button onclick="openResults()"
+        class="bg-green-500 px-4 py-2 rounded-xl">
+        ผลคะแนน
+      </button>
+
+    </div>
+
+    <div id="candidateContainer"
+      class="grid grid-cols-1 md:grid-cols-3 gap-5">
+    </div>
+
+  </section>
+
+  <!-- RESULT -->
+  <section id="resultPage" class="hidden p-5">
+
+    <h2 class="text-3xl font-bold mb-5">
+      ผลคะแนน Real-time
+    </h2>
+
+    <div id="resultContainer"></div>
+
+  </section>
+
+  <!-- ADMIN -->
+  <section id="adminPage" class="hidden p-5">
+
+    <h2 class="text-3xl font-bold mb-6">
+      Admin Panel
+    </h2>
+
+    <div class="glass p-5 rounded-2xl mb-5">
+
+      <input id="candidateName"
+        class="w-full p-3 rounded-xl bg-slate-900 mb-3"
+        placeholder="ชื่อผู้สมัคร">
+
+      <input id="candidateNumber"
+        class="w-full p-3 rounded-xl bg-slate-900 mb-3"
+        placeholder="หมายเลข">
+
+      <textarea id="candidatePolicy"
+        class="w-full p-3 rounded-xl bg-slate-900 mb-3"
+        placeholder="นโยบาย"></textarea>
+
+      <button onclick="addCandidate()"
+        class="bg-blue-500 px-5 py-3 rounded-xl">
+        เพิ่มผู้สมัคร
+      </button>
+
+    </div>
+
+    <div id="adminCandidates"></div>
+
+  </section>
+
+  <!-- OWNER -->
+  <section id="ownerPage" class="hidden p-5">
+
+    <h2 class="text-3xl font-bold mb-6">
+      Owner Panel
+    </h2>
+
+    <div class="grid gap-5">
+
+      <button onclick="toggleVoting()"
+        class="bg-green-500 p-4 rounded-xl">
+        เปิด / ปิด โหวต
+      </button>
+
+      <button onclick="toggleResult()"
+        class="bg-blue-500 p-4 rounded-xl">
+        เปิด / ปิด ผลคะแนน
+      </button>
+
+      <button onclick="toggleMaintenance()"
+        class="bg-yellow-500 p-4 rounded-xl">
+        Maintenance Mode
+      </button>
+
+      <button onclick="resetSystem()"
+        class="bg-red-500 p-4 rounded-xl">
+        รีเซ็ตระบบ
+      </button>
+
+    </div>
+
+  </section>
+
+</div>
+
+<script type="module" src="firebase.js"></script>
+<script type="module" src="app.js"></script>
+
+</body>
+</html>

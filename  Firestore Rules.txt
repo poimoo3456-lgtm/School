@@ -1,0 +1,47 @@
+rules_version = '2';
+
+service cloud.firestore {
+
+  match /databases/{database}/documents {
+
+    match /schools/{schoolId} {
+
+      allow read: if true;
+
+      match /candidates/{candidateId} {
+
+        allow read: if true;
+
+        allow create,update,delete:
+        if request.auth != null
+        &&
+        (
+          request.auth.token.role == "admin"
+          ||
+          request.auth.token.role == "owner"
+        );
+
+      }
+
+      match /votes/{voteId} {
+
+        allow create:
+        if request.auth != null
+        &&
+        !exists(
+          /databases/$(database)/documents/schools/$(schoolId)/votes/$(request.auth.uid)
+        );
+
+        allow read:
+        if request.auth != null;
+      }
+
+      match /logs/{logId} {
+
+        allow read:
+        if request.auth.token.role == "owner";
+
+      }
+    }
+  }
+}
